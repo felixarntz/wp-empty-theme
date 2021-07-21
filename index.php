@@ -63,7 +63,15 @@ if ( have_posts() ) {
 					the_title( sprintf( '<h2 class="entry-title default-max-width"><a href="%s">', esc_url( get_permalink() ) ), '</a></h2>' );
 				}
 				?>
-				<?php twenty_twenty_one_post_thumbnail(); ?>
+				<?php
+				if ( ! post_password_required() && ! is_attachment() && has_post_thumbnail() ) {
+					?>
+					<figure class="post-thumbnail">
+						<?php the_post_thumbnail( 'post-thumbnail' ); ?>
+					</figure><!-- .post-thumbnail -->
+					<?php
+				}
+				?>
 			</header><!-- .entry-header -->
 
 			<div class="entry-content">
