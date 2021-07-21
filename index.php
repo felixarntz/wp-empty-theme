@@ -2,25 +2,48 @@
 /**
  * The main template file
  *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_One
- * @since Twenty Twenty-One 1.0
  */
 
-get_header(); ?>
+get_header();
+?>
 
-<?php if ( is_home() && ! is_front_page() && ! empty( single_post_title( '', false ) ) ) : ?>
+<?php
+if ( is_home() && ! is_front_page() && ! empty( single_post_title( '', false ) ) ) {
+	?>
 	<header class="page-header alignwide">
 		<h1 class="page-title"><?php single_post_title(); ?></h1>
 	</header><!-- .page-header -->
-<?php endif; ?>
+	<?php
+} elseif ( is_search() ) {
+	?>
+	<header class="page-header alignwide">
+		<h1 class="page-title">
+			<?php
+			printf(
+				/* translators: %s: Search term. */
+				esc_html__( 'Results for "%s"', 'twentytwentyone' ),
+				esc_html( get_search_query() )
+			);
+			?>
+		</h1>
+	</header><!-- .page-header -->
+	<?php
+} elseif ( is_archive() ) {
+	?>
+	<header class="page-header alignwide">
+		<?php the_archive_title( '<h1 class="page-title">', '</h1>' ); ?>
+		<?php the_archive_description( '<p class="page-description">', '</p>' ); ?>
+	</header><!-- .page-header -->
+	<?php
+} elseif ( is_404() ) {
+	?>
+	<header class="page-header alignwide">
+		<h1 class="page-title"><?php esc_html_e( 'Nothing here', 'twentytwentyone' ); ?></h1>
+	</header><!-- .page-header -->
+	<?php
+}
+?>
 
 <?php
 if ( have_posts() ) {
@@ -29,17 +52,94 @@ if ( have_posts() ) {
 	while ( have_posts() ) {
 		the_post();
 
-		get_template_part( 'template-parts/content/content', get_theme_mod( 'display_excerpt_or_full_post', 'excerpt' ) );
+		?>
+		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+			<header class="entry-header alignwide">
+				<?php
+				if ( is_singular() ) {
+					the_title( '<h1 class="entry-title">', '</h1>' );
+				} else {
+					the_title( sprintf( '<h2 class="entry-title default-max-width"><a href="%s">', esc_url( get_permalink() ) ), '</a></h2>' );
+				}
+				?>
+				<?php twenty_twenty_one_post_thumbnail(); ?>
+			</header><!-- .entry-header -->
+
+			<div class="entry-content">
+				<?php
+				the_content();
+
+				wp_link_pages(
+					array(
+						'before'   => '<nav class="page-links" aria-label="' . esc_attr__( 'Page', 'twentytwentyone' ) . '">',
+						'after'    => '</nav>',
+						/* translators: %: Page number. */
+						'pagelink' => esc_html__( 'Page %', 'twentytwentyone' ),
+					)
+				);
+				?>
+			</div><!-- .entry-content -->
+
+			<footer class="entry-footer default-max-width">
+				<?php twenty_twenty_one_entry_meta_footer(); ?>
+			</footer><!-- .entry-footer -->
+
+		</article><!-- #post-<?php the_ID(); ?> -->
+		<?php
 	}
 
-	// Previous/next page navigation.
-	twenty_twenty_one_the_posts_navigation();
+	if ( is_singular() ) {
+		if ( comments_open() || get_comments_number() ) {
+			comments_template();
+		}
+
+		the_post_navigation(
+			array(
+				'next_text' => '<p class="meta-nav">' . esc_html__( 'Next post', 'twentytwentyone' ) . '</p><p class="post-title">%title</p>',
+				'prev_text' => '<p class="meta-nav">' . esc_html__( 'Previous post', 'twentytwentyone' ) . '</p><p class="post-title">%title</p>',
+			)
+		);
+	} else {
+		the_posts_pagination(
+			array(
+				'before_page_number' => esc_html__( 'Page', 'twentytwentyone' ) . ' ',
+				'mid_size'           => 0,
+				'prev_text'          => sprintf(
+					'<span class="nav-prev-text">%s</span>',
+					wp_kses(
+						__( 'Newer <span class="nav-short">posts</span>', 'twentytwentyone' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					)
+				),
+				'next_text'          => sprintf(
+					'<span class="nav-next-text">%s</span>',
+					wp_kses(
+						__( 'Older <span class="nav-short">posts</span>', 'twentytwentyone' ),
+						array(
+							'span' => array(
+								'class' => array(),
+							),
+						)
+					)
+				),
+			)
+		);
+	}
 
 } else {
-
-	// If no content, include the "No posts found" template.
-	get_template_part( 'template-parts/content/content-none' );
-
+	?>
+	<div class="page-content default-max-width">
+		<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentytwentyone' ); ?></p>
+		<?php get_search_form(); ?>
+	</div>
+	<?php
 }
+?>
 
+<?php
 get_footer();

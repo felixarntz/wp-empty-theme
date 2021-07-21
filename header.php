@@ -1,19 +1,13 @@
 <?php
 /**
- * The header.
- *
- * This is the template that displays all of the <head> section and everything up until main.
+ * The template for displaying the header
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
- *
- * @package WordPress
- * @subpackage Twenty_Twenty_One
- * @since Twenty Twenty-One 1.0
  */
 
 ?>
 <!doctype html>
-<html <?php language_attributes(); ?> <?php twentytwentyone_the_html_classes(); ?>>
+<html <?php language_attributes(); ?>>
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,10 +16,37 @@
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
+
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'twentytwentyone' ); ?></a>
 
-	<?php get_template_part( 'template-parts/header/site-header' ); ?>
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<?php
+			if ( has_custom_logo() ) {
+				?>
+				<div class="site-logo"><?php the_custom_logo(); ?></div>
+				<?php
+			}
+
+			if ( get_bloginfo( 'name', 'display' ) ) {
+				?>
+				<p class="site-title">
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
+				</p>
+				<?php
+			}
+
+			if ( get_bloginfo( 'description', 'display' ) ) {
+				?>
+				<p class="site-description">
+					<?php bloginfo( 'desription' ); ?>
+				</p>
+				<?php
+			}
+			?>
+		</div><!-- .site-branding -->
+	</header><!-- #masthead -->
 
 	<div id="content" class="site-content">
 		<div id="primary" class="content-area">
