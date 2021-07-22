@@ -115,7 +115,7 @@ if ( ! function_exists( 'twenty_twenty_one_setup' ) ) {
 add_action( 'after_setup_theme', 'twenty_twenty_one_setup' );
 
 /**
- * Set the content width in pixels, based on the theme's design and stylesheet.
+ * Sets the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.
  *
@@ -130,10 +130,25 @@ function twenty_twenty_one_content_width() {
 add_action( 'after_setup_theme', 'twenty_twenty_one_content_width', 0 );
 
 /**
- * Enqueue scripts and styles.
+ * Prints the minimum theme stylesheet with WP-required directives.
+ */
+function twenty_twenty_one_print_min_style() {
+	$css = file_get_contents( get_stylesheet_directory() . '/min-style.css' );
+	?>
+	<style type="text/css">
+		<?php echo $css; // phpcs:ignore WordPress.Security.EscapeOutput ?>
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'twenty_twenty_one_print_min_style', 2 );
+
+/**
+ * Enqueues scripts and styles.
  */
 function twenty_twenty_one_scripts() {
 	// Threaded comment reply styles.
+	// This is the only script loaded by the theme, since it's effectively a
+	// required default for WordPress themes.
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
 	}
