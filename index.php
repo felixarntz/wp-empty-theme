@@ -22,7 +22,7 @@ if ( is_home() && ! is_front_page() && ! empty( single_post_title( '', false ) )
 			<?php
 			printf(
 				/* translators: %s: Search term. */
-				esc_html__( 'Results for "%s"', 'twentytwentyone' ),
+				esc_html__( 'Results for "%s"', 'wp-empty-theme' ),
 				esc_html( get_search_query() )
 			);
 			?>
@@ -39,7 +39,7 @@ if ( is_home() && ! is_front_page() && ! empty( single_post_title( '', false ) )
 } elseif ( is_404() ) {
 	?>
 	<header class="page-header alignwide">
-		<h1 class="page-title"><?php esc_html_e( 'Nothing here', 'twentytwentyone' ); ?></h1>
+		<h1 class="page-title"><?php esc_html_e( 'Nothing here', 'wp-empty-theme' ); ?></h1>
 	</header><!-- .page-header -->
 	<?php
 }
@@ -80,17 +80,17 @@ if ( have_posts() ) {
 
 				wp_link_pages(
 					array(
-						'before'   => '<nav class="page-links" aria-label="' . esc_attr__( 'Page', 'twentytwentyone' ) . '">',
+						'before'   => '<nav class="page-links" aria-label="' . esc_attr__( 'Page', 'wp-empty-theme' ) . '">',
 						'after'    => '</nav>',
 						/* translators: %: Page number. */
-						'pagelink' => esc_html__( 'Page %', 'twentytwentyone' ),
+						'pagelink' => esc_html__( 'Page %', 'wp-empty-theme' ),
 					)
 				);
 				?>
 			</div><!-- .entry-content -->
 
 			<footer class="entry-footer default-max-width">
-				<?php twenty_twenty_one_entry_meta_footer(); ?>
+				<?php wp_empty_theme_entry_meta_footer(); ?>
 			</footer><!-- .entry-footer -->
 
 		</article><!-- #post-<?php the_ID(); ?> -->
@@ -104,19 +104,19 @@ if ( have_posts() ) {
 
 		the_post_navigation(
 			array(
-				'next_text' => '<p class="meta-nav">' . esc_html__( 'Next post', 'twentytwentyone' ) . '</p><p class="post-title">%title</p>',
-				'prev_text' => '<p class="meta-nav">' . esc_html__( 'Previous post', 'twentytwentyone' ) . '</p><p class="post-title">%title</p>',
+				'next_text' => '<p class="meta-nav">' . esc_html__( 'Next post', 'wp-empty-theme' ) . '</p><p class="post-title">%title</p>',
+				'prev_text' => '<p class="meta-nav">' . esc_html__( 'Previous post', 'wp-empty-theme' ) . '</p><p class="post-title">%title</p>',
 			)
 		);
 	} else {
 		the_posts_pagination(
 			array(
-				'before_page_number' => esc_html__( 'Page', 'twentytwentyone' ) . ' ',
+				'before_page_number' => esc_html__( 'Page', 'wp-empty-theme' ) . ' ',
 				'mid_size'           => 0,
 				'prev_text'          => sprintf(
 					'<span class="nav-prev-text">%s</span>',
 					wp_kses(
-						__( 'Newer <span class="nav-short">posts</span>', 'twentytwentyone' ),
+						__( 'Newer <span class="nav-short">posts</span>', 'wp-empty-theme' ),
 						array(
 							'span' => array(
 								'class' => array(),
@@ -127,7 +127,7 @@ if ( have_posts() ) {
 				'next_text'          => sprintf(
 					'<span class="nav-next-text">%s</span>',
 					wp_kses(
-						__( 'Older <span class="nav-short">posts</span>', 'twentytwentyone' ),
+						__( 'Older <span class="nav-short">posts</span>', 'wp-empty-theme' ),
 						array(
 							'span' => array(
 								'class' => array(),
@@ -142,7 +142,7 @@ if ( have_posts() ) {
 } else {
 	?>
 	<div class="page-content default-max-width">
-		<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'twentytwentyone' ); ?></p>
+		<p><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'wp-empty-theme' ); ?></p>
 		<?php get_search_form(); ?>
 	</div>
 	<?php

@@ -29,8 +29,8 @@
 				<?php
 				printf(
 					/* translators: %s: WordPress. */
-					esc_html__( 'Proudly powered by %s.', 'twentytwentyone' ),
-					'<a href="' . esc_url( __( 'https://wordpress.org/', 'twentytwentyone' ) ) . '">WordPress</a>'
+					esc_html__( 'Proudly powered by %s.', 'wp-empty-theme' ),
+					'<a href="' . esc_url( __( 'https://wordpress.org/', 'wp-empty-theme' ) ) . '">WordPress</a>'
 				);
 				?>
 			</div><!-- .powered-by -->

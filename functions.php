@@ -10,7 +10,7 @@ if ( version_compare( $GLOBALS['wp_version'], '5.3', '<' ) ) {
 	require get_template_directory() . '/inc/back-compat.php';
 }
 
-if ( ! function_exists( 'twenty_twenty_one_setup' ) ) {
+if ( ! function_exists( 'wp_empty_theme_setup' ) ) {
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -18,14 +18,12 @@ if ( ! function_exists( 'twenty_twenty_one_setup' ) ) {
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
 	 */
-	function twenty_twenty_one_setup() {
+	function wp_empty_theme_setup() {
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
-		 * If you're building a theme based on Twenty Twenty-One, use a find and replace
-		 * to change 'twentytwentyone' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain( 'twentytwentyone', get_template_directory() . '/languages' );
+		load_theme_textdomain( 'wp-empty-theme', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support( 'automatic-feed-links' );
@@ -112,7 +110,7 @@ if ( ! function_exists( 'twenty_twenty_one_setup' ) ) {
 		add_theme_support( 'responsive-embeds' );
 	}
 }
-add_action( 'after_setup_theme', 'twenty_twenty_one_setup' );
+add_action( 'after_setup_theme', 'wp_empty_theme_setup' );
 
 /**
  * Sets the content width in pixels, based on the theme's design and stylesheet.
@@ -121,18 +119,18 @@ add_action( 'after_setup_theme', 'twenty_twenty_one_setup' );
  *
  * @global int $content_width Content width.
  */
-function twenty_twenty_one_content_width() {
+function wp_empty_theme_content_width() {
 	// This variable is intended to be overruled from themes.
 	// Open WPCS issue: {@link https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues/1043}.
 	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 	$GLOBALS['content_width'] = 750;
 }
-add_action( 'after_setup_theme', 'twenty_twenty_one_content_width', 0 );
+add_action( 'after_setup_theme', 'wp_empty_theme_content_width', 0 );
 
 /**
  * Prints the minimum theme stylesheet with WP-required directives.
  */
-function twenty_twenty_one_print_min_style() {
+function wp_empty_theme_print_min_style() {
 	$css = file_get_contents( get_stylesheet_directory() . '/min-style.css' );
 	?>
 	<style type="text/css">
@@ -140,12 +138,12 @@ function twenty_twenty_one_print_min_style() {
 	</style>
 	<?php
 }
-add_action( 'wp_head', 'twenty_twenty_one_print_min_style', 2 );
+add_action( 'wp_head', 'wp_empty_theme_print_min_style', 2 );
 
 /**
  * Enqueues scripts and styles.
  */
-function twenty_twenty_one_scripts() {
+function wp_empty_theme_scripts() {
 	// Threaded comment reply styles.
 	// This is the only script loaded by the theme, since it's effectively a
 	// required default for WordPress themes.
@@ -153,7 +151,7 @@ function twenty_twenty_one_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'twenty_twenty_one_scripts' );
+add_action( 'wp_enqueue_scripts', 'wp_empty_theme_scripts' );
 
 // Enhance the theme by hooking into WordPress.
 require get_template_directory() . '/inc/template-functions.php';
