@@ -40,7 +40,7 @@
 			if ( get_bloginfo( 'description', 'display' ) ) {
 				?>
 				<p class="site-description">
-					<?php bloginfo( 'desription' ); ?>
+					<?php bloginfo( 'description' ); ?>
 				</p>
 				<?php
 			}
